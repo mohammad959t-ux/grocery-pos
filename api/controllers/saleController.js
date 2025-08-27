@@ -7,13 +7,11 @@ const addSale = async (req, res) => {
     const { items, paymentMethod } = req.body;
     let total = 0;
 
-    // تحديث المخزون وحساب الإجمالي
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
       const product = await Product.findById(item.product);
       if (!product) return res.status(404).json({ message: 'Product not found' });
 
-      // خصم الكمية
       product.stock -= item.quantity;
       await product.save();
 
