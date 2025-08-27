@@ -1,12 +1,21 @@
 const Joi = require('joi');
 const Product = require('../models/Product');
 
+const barcodeSchema = Joi.object({
+  code: Joi.string().required(),
+  type: Joi.string().valid('piece', 'carton').required(),
+  unit: Joi.number().integer().min(1).required(),
+});
+
 const productSchema = Joi.object({
   name: Joi.string().required(),
-  price: Joi.number().positive().required(),
+  price: Joi.object({
+    piece: Joi.number().positive().required(),
+    carton: Joi.number().positive().optional(),
+  }).required(),
   costPrice: Joi.number().positive().required(),
   stock: Joi.number().integer().min(0).required(),
-  // يمكن إضافة المزيد من الحقول للتحقق
+  barcodes: Joi.array().items(barcodeSchema).optional(),
 });
 
 const addProduct = async (req, res) => {
