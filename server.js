@@ -1,23 +1,16 @@
-const express = require('express');
+// server.js
+const app = require('./api');
 const dotenv = require('dotenv');
-const cors = require('cors');
 const connectDB = require('./config/db');
 
 dotenv.config();
+
+const port = process.env.PORT || 5000;
+
+// Connect to the database
 connectDB();
 
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-app.use('/api/products', require('./routes/productRoutes'));
-app.use('/api/sales', require('./routes/saleRoutes'));
-app.use('/api/analytics', require('./routes/analyticsRoutes'));
-
-app.get('/', (req, res) => {
-  res.send('Grocery POS Backend is running');
+// use the app from the api folder as a whole
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
