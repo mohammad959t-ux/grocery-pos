@@ -13,11 +13,12 @@ const getAnalytics = async (req, res) => {
       totalIncome += sale.total;
 
       sale.items.forEach(item => {
-        const prodId = item.product._id.toString();
-        if (!productSales[prodId]) productSales[prodId] = 0;
-        productSales[prodId] += item.quantity;
-
-        totalCost += item.quantity * item.product.costPrice;
+        if (item.product) {
+          const prodId = item.product._id.toString();
+          if (!productSales[prodId]) productSales[prodId] = 0;
+          productSales[prodId] += item.quantity;
+          totalCost += item.quantity * item.product.costPrice;
+        }
       });
     });
 
