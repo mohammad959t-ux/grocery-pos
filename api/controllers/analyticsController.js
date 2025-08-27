@@ -1,5 +1,5 @@
-const Sale = require('../models/Sale');
-const Product = require('../models/Product');
+const Sale = require('./../models/Sale');
+const Product = require('./../models/Product');
 
 
 const getAnalytics = async (req, res) => {
