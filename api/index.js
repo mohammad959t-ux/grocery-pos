@@ -1,23 +1,28 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('../config/db');
-const dotenv = require('dotenv');
 
+// Load env
 dotenv.config();
 
+// Connect MongoDB
+connectDB();
+
 const app = express();
+
 app.use(cors());
 app.use(express.json());
-
-connectDB().catch(err => console.log('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/sales', require('./routes/saleRoutes'));
 app.use('/api/analytics', require('./routes/analyticsRoutes'));
 
-// Root route
-app.get('/', (req, res) => res.send('Grocery POS Backend on Vercel'));
+// Root
+app.get('/', (req, res) => {
+  res.send('Grocery POS Backend is running');
+});
 
-// Export app (Serverless)
+// Export app as serverless function
 module.exports = app;
