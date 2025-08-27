@@ -16,9 +16,9 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/products', require('./routes/productRoutes'));
-app.use('/api/sales', require('./routes/saleRoutes'));
-app.use('/api/analytics', require('./routes/analyticsRoutes')); // تحليلات
+app.use('/api/products', require('./api/routes/productRoutes'));
+app.use('/api/sales', require('./api/routes/saleRoutes'));
+app.use('/api/analytics', require('./api/routes/analyticsRoutes')); // تحليلات
 
 // Root route (اختياري)
 app.get('/', (req, res) => {

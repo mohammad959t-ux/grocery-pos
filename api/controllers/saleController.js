@@ -1,5 +1,5 @@
-const Sale = require('../models/Sale');
-const Product = require('../models/Product');
+const Sale = require('../../models/Sale');
+const Product = require('../../models/Product');
 
 // إضافة عملية بيع
 const addSale = async (req, res) => {
