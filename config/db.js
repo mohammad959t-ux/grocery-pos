@@ -1,7 +1,6 @@
-// config/db.js
 const mongoose = require('mongoose');
 
-let cached = global.mongoose; // إعادة استخدام الاتصال بين الطلبات
+let cached = global.mongoose;
 
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
