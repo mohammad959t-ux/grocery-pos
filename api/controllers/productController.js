@@ -1,6 +1,5 @@
-const Product = require('../../models/Product');
+const Product = require('../models/Product');
 
-// إضافة منتج جديد
 const addProduct = async (req, res) => {
   try {
     const product = new Product(req.body);
@@ -11,7 +10,6 @@ const addProduct = async (req, res) => {
   }
 };
 
-// جلب كل المنتجات
 const getProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -21,7 +19,6 @@ const getProducts = async (req, res) => {
   }
 };
 
-// تحديث المنتج
 const updateProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -31,7 +28,6 @@ const updateProduct = async (req, res) => {
   }
 };
 
-// حذف المنتج
 const deleteProduct = async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);

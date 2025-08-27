@@ -12,7 +12,7 @@ const productSchema = mongoose.Schema({
     piece: { type: Number, required: true },
     carton: { type: Number }
   },
-  costPrice: { type: Number, required: true }, // سعر الشراء للقطعة
+  costPrice: { type: Number, required: true },
   stock: { type: Number, default: 0 },
   barcodes: [barcodeSchema]
 }, { timestamps: true });

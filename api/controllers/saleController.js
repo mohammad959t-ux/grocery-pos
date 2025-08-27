@@ -1,7 +1,6 @@
-const Sale = require('../../models/Sale');
-const Product = require('../../models/Product');
+const Sale = require('../models/Sale');
+const Product = require('../models/Product');
 
-// إضافة عملية بيع
 const addSale = async (req, res) => {
   try {
     const { items, paymentMethod } = req.body;
@@ -27,7 +26,6 @@ const addSale = async (req, res) => {
   }
 };
 
-// جلب كل المبيعات
 const getSales = async (req, res) => {
   try {
     const sales = await Sale.find().populate('items.product');

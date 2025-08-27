@@ -17,7 +17,6 @@ const getAnalytics = async (req, res) => {
         if (!productSales[prodId]) productSales[prodId] = 0;
         productSales[prodId] += item.quantity;
 
-        // حساب التكاليف بالاعتماد على سعر الشراء
         totalCost += item.quantity * item.product.costPrice;
       });
     });
@@ -35,4 +34,3 @@ const getAnalytics = async (req, res) => {
 };
 
 module.exports = { getAnalytics };
-    
