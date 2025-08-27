@@ -25,7 +25,17 @@ app.use(async (req, res, next) => {
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/sales', require('./routes/saleRoutes'));
 app.use('/api/analytics', require('./routes/analyticsRoutes'));
-
+// Test DB connection
+app.get('/api/test-db', async (req, res) => {
+    try {
+      const db = await connectDB();
+      const collections = await db.connection.db.listCollections().toArray();
+      res.json({ message: 'MongoDB connected!', collections });
+    } catch (error) {
+      res.status(500).json({ message: 'MongoDB connection failed', error: error.message });
+    }
+  });
+  
 // Root
 app.get('/', (req, res) => {
   res.send('Grocery POS Backend is running');
