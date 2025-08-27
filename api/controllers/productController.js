@@ -9,7 +9,7 @@ const addProduct = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-
+ 
 const getProducts = async (req, res) => {
   try {
     const products = await Product.find();

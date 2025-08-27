@@ -1,6 +1,6 @@
 const Sale = require('../../models/Sale');
 const Product = require('../../models/Product');
-
+ 
 const getAnalytics = async (req, res) => {
   try {
     const sales = await Sale.find().populate('items.product');
