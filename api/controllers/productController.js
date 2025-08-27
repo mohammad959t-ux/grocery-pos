@@ -1,4 +1,4 @@
-const Product = require('../../models/Product');
+const Product = require('../models/Product');
 
 const addProduct = async (req, res) => {
   try {
@@ -9,7 +9,7 @@ const addProduct = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
- 
+
 const getProducts = async (req, res) => {
   try {
     const products = await Product.find();
