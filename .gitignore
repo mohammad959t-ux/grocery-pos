@@ -18,3 +18,4 @@ Thumbs.db
 # Build output (لو عندك أي مجلد build)
 build/
 dist/
+.vercel
