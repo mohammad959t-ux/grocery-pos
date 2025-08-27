@@ -1,7 +1,7 @@
 const express = require('express');
-const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('../config/db');
+const dotenv = require('dotenv');
 
 dotenv.config();
 connectDB();
@@ -18,5 +18,5 @@ app.use('/api/analytics', require('./routes/analyticsRoutes'));
 // Root route
 app.get('/', (req, res) => res.send('Grocery POS Backend on Vercel'));
 
-// Export app for Vercel serverless function
+// Export app without app.listen()
 module.exports = app;
