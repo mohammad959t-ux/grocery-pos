@@ -27,13 +27,11 @@ const addSale = async (req, res) => {
     if (error) {
       return res.status(400).json({ message: error.details[0].message });
     }
-    
-    // سنقوم الآن بتنفيذ المنطق الرئيسي لمعالجة كل عملية بيع
-    const salesToSave = [{ items, total, paymentMethod }];
-    await processSales(salesToSave);
+
+    // معالجة البيع
+    await processSales([{ items, total, paymentMethod }]);
 
     res.status(201).json({ message: 'Sale added successfully' });
-
   } catch (error) {
     console.error('Error adding sale:', error);
     res.status(500).json({ message: error.message });
@@ -46,11 +44,10 @@ const syncSales = async (req, res) => {
     if (error) {
       return res.status(400).json({ message: error.details[0].message });
     }
-    
+
     await processSales(req.body);
 
     res.status(200).json({ message: 'Sales synced successfully' });
-
   } catch (error) {
     console.error('Error syncing sales:', error);
     res.status(500).json({ message: error.message });
@@ -58,32 +55,28 @@ const syncSales = async (req, res) => {
 };
 
 const processSales = async (salesToProcess) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
   try {
     for (const saleData of salesToProcess) {
       const { items, total, paymentMethod } = saleData;
 
+      // تحديث المخزون لكل منتج
       for (const item of items) {
-        const product = await Product.findById(item.product).session(session);
+        const product = await Product.findById(item.product);
         if (!product) {
           throw new Error(`Product with ID ${item.product} not found`);
         }
         if (product.stock < item.quantity) {
           throw new Error(`Not enough stock for product ${product.name}`);
         }
-        await Product.updateOne({ _id: item.product }, { $inc: { stock: -item.quantity } }).session(session);
+        product.stock -= item.quantity;
+        await product.save();
       }
-      const newSale = new Sale({ items, total, paymentMethod });
-      await newSale.save({ session });
-    }
 
-    await session.commitTransaction();
-    session.endSession();
+      // حفظ عملية البيع
+      const newSale = new Sale({ items, total, paymentMethod });
+      await newSale.save();
+    }
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
     throw error;
   }
 };
